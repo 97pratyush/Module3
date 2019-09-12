@@ -1,15 +1,15 @@
 package com.cg;
 
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.BeanFactoryAware;
-import org.springframework.beans.factory.BeanNameAware;
-import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 
-public class Circle implements BeanNameAware, BeanFactoryAware, ApplicationContextAware, InitializingBean, DisposableBean {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class Circle {
+	
+	@Autowired
 	private Point center;
 
 	public Point getCenter() {
@@ -24,36 +24,13 @@ public class Circle implements BeanNameAware, BeanFactoryAware, ApplicationConte
 		System.out.println("Circle points (" + center.getX() + ", " + center.getY() + ")");
 	}
 
-	@Override
-	public void setBeanName(String beanName) {
-		System.out.println("Bean Name aware : " + beanName);
-	}
-
-	@Override
-	public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
-		System.out.println("BeanFactory aware executed and value : " + beanFactory);
-	}
-
-	@Override
-	public void setApplicationContext(ApplicationContext context) throws BeansException {
-		System.out.println("ApplicationContext aware executed and value : " + context);
-	}
-
-	@Override
-	public void afterPropertiesSet() throws Exception {
-		System.out.println("Initializing bean after properties set!");
+	@PostConstruct
+	public void startUp() {
+		System.out.println("Startup method executed");
 	}
 	
-	public void myInit() {
-		System.out.println("My init method executed!");
-	}
-
-	@Override
-	public void destroy() throws Exception {
-		System.out.println("Disposable bean destory method executed!");
-	}
-	
-	public void tearDown() {
-		System.out.println("tearDown method executed!");
+	@PreDestroy
+	public void destroy() {
+		System.out.println("Destroy method executed!");
 	}
 }

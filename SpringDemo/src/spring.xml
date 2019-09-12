@@ -14,37 +14,69 @@
         http://www.springframework.org/schema/mvc/spring-mvc.xsd
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx-3.0.xsd"
-        default-init-method="myInit" default-destroy-method="tearDown">
+        >
+        <!-- default-init-method="myInit" default-destroy-method="tearDown" -->
 
-	<bean id="triangle" class="com.cg.Triangle">
-<!-- 		<property name="pointA">
+<!-- 	<bean id="triangle" class="com.cg.Triangle">
+		<property name="pointA">
 			<bean class="com.cg.Point"> <!- Inner bean. Used instead of ref and separate bean. Used to hide from others ->
 				<property name="x" value="0"/>
 				<property name="y" value="0"/>
 			</bean>
-		</property>-->
+		</property>
 		
 		<property name="pointA" ref="ZeroPoint"/>
 		<property name="pointB" ref="center"/>
 		<property name="pointC" ref="point2"/>
-	</bean>
+	</bean> -->
 
 	<bean id="ZeroPoint" class="com.cg.Point">
 		<property name="x" value="0" />
 		<property name="y" value="0" />
 	</bean>
 	<bean id="center" class="com.cg.Point">
-		<property name="x" value="-20" />
-		<property name="y" value="-10" />
+		<property name="x" value="${center.x}" />
+		<property name="y" value="${center.y}" />
 	</bean>
 	<bean id="point2" class="com.cg.Point">
-		<property name="x" value="20" />
-		<property name="y" value="10" />
+		<property name="x" value="${p.x}" />
+		<property name="y" value="${p.y}" />
 	</bean>
 	
 	<!-- <bean id="circle" class="com.cg.Circle" autowire="byName"/> byname - goes to bean with id as center -->
 	
 	<!-- <bean class="com.cg.DisplayNameBeanPostProcessor"/> -->
 	
-	<bean class="com.cg.MyBeanFactoryPostProcessor"/>
+	<!-- <bean class="com.cg.MyBeanFactoryPostProcessor"/> -->
+	
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>points.properties</value>
+				<value>xyz.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="employee" class="com.cg.Employee">
+		<property name="dob" value="getDate()"/>
+	</bean>
+	
+	<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+		<property name="customEditors">
+			<map>
+				<entry key="java.sql.Date" value="com.cg.SqlDateEditor"/>
+			</map>
+		</property>
+	</bean>
+	
+	<!-- <bean class="org.springframework.beans.factory.annotation.RequiredAnnotationBeanPostProcessor"/> -->
+	
+	<!-- <bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor"/> Not needed after using contect annotation config--> 
+	
+	<context:annotation-config/>
+	
+	<context:component-scan base-package="com.cg"/>
+	
+	
 </beans>

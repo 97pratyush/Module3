@@ -1,7 +1,14 @@
 package com.cg;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
 public class Point {
+	
+	@Value("100")
 	private int x;
+	@Value("100")
 	private int y;
 
 	public int getX() {

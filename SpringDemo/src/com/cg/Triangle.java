@@ -45,9 +45,9 @@ public class Triangle {
 		System.out.println("Disposable bean destory method executed");		
 	}*/
 	
-	/*
-	 * public void myInit() { System.out.println("My Init method executed!"); }
-	 * 
-	 * public void tearDown() { System.out.println("My destroy method executed!"); }
-	 */
+	
+	  public void myInit() { System.out.println("My Init method executed!"); }
+	  
+	  public void tearDown() { System.out.println("My destroy method executed!"); }
+	 
 }
